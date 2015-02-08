@@ -17,10 +17,9 @@ namespace CombatSimulator
         static int CursorX = Console.WindowWidth;
         static int CursorY = Console.WindowHeight;
 
+        static int RoundCounter = 0;
         static int NachosRemaining = 0;
         static int BirdsRemaining = 0;
-        //static int extraBirdsFlyAway = 0;
-        //static bool AlkaSeltzerSuccessful = false;
         static bool ChuckNorrisPower = false;
         static string PlayerSuccess = string.Empty;
         static string BirdSuccess = string.Empty;
@@ -29,11 +28,11 @@ namespace CombatSimulator
 
         static void Main(string[] args)
         {
-            Console.SetWindowSize(110, 35);
+            Console.SetWindowSize(116, 35);
 
             //IntroAnimation();
-            //Instructions();
-            RunGame();
+            Instructions();
+            //RunGame();
 
             //Console.ReadKey();
         }
@@ -66,35 +65,40 @@ namespace CombatSimulator
             Console.Clear();
 
             SeagullShowdownText();
-
+            Thread.Sleep(PauseDuration / 2);
             Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
-            OldTimeyTextPrinter("Man, you've been through this crap before.  Just trying to enjoy some nachos at the beach and a swarm of Seagulls come and eat all your food, ruining the day.", 10);
+            OldTimeyTextPrinter("Man, you've been through this crap before.  Just trying to enjoy some nachos at the beach \nand a swarm of Seagulls come and eat all your food, ruining the day.", 20);
             Thread.Sleep(PauseDuration / 2);
             Console.WriteLine();
             Console.WriteLine();
-            OldTimeyTextPrinter("This time you're fighting back!!  You've brought a bunch of Alka-Seltzer with you...knowing that Seagulls blow up if they eat one.", 10);
+            OldTimeyTextPrinter("This time you're fighting back!!  You've brought a bunch of Alka-Seltzer with you...\nknowing that Seagulls blow up if they eat one.", 20);
             Thread.Sleep(PauseDuration / 2);
             Console.WriteLine();
             Console.WriteLine();
-            OldTimeyTextPrinter("You've also been honing your skills at throwing sand.  You're totally ready for this!!", 10);
-            Thread.Sleep(PauseDuration / 2);
+            OldTimeyTextPrinter("You've also been honing your skills at throwing sand.  You're totally ready for this!!", 20);
+            Thread.Sleep(PauseDuration);
             Console.WriteLine();
             Console.WriteLine();
-            OldTimeyTextPrinter("Alka-Seltzer kills a bird and causes others to fly away...but only if eaten.", 10);
             Console.WriteLine();
-            Thread.Sleep(PauseDuration / 4);
-            OldTimeyTextPrinter("Throwing sand always works, but only makes a few birds fly away at most.", 10);
-            Console.WriteLine();
-            Thread.Sleep(PauseDuration / 4);
-            OldTimeyTextPrinter("Add more chips to the nachos if you almost run out (1-4).", 10);
+            Console.WriteLine("       COMBAT CHOICES:");
+            Thread.Sleep(PauseDuration);
+            OldTimeyTextPrinter("**Alka-Seltzer kills a bird and causes others to fly away...but only if eaten.", 10);
             Console.WriteLine();
             Thread.Sleep(PauseDuration / 4);
-            OldTimeyTextPrinter("WORK FAST!!!  The Seagulls are attacking your plate the whole time, grabbing up to several chips at a time!!", 10);
-
-            //ROUND INFO function
-
+            OldTimeyTextPrinter("**Throwing sand always works, but only makes a few birds fly away at most.", 10);
+            Console.WriteLine();
+            Thread.Sleep(PauseDuration / 4);
+            OldTimeyTextPrinter("**Add more chips to the nachos if you almost run out (1-4).", 10);
+            Console.WriteLine();
+            Thread.Sleep(PauseDuration);
+            Console.WriteLine();
+            OldTimeyTextPrinter("WORK FAST!!!  The Seagulls are attacking your plate the whole time, grabbing up to several chips at a time!!", 20);
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Press any key to continue: ");
+            Console.ReadKey();
         }
 
         static void RunGame()
@@ -102,7 +106,7 @@ namespace CombatSimulator
             IsPlaying = true;
             NachosRemaining = 20;
             BirdsRemaining = 30;
-            int roundCounter = 0;
+            RoundCounter = 0;
             ChuckNorrisPower = false;
             PlayerSuccess = string.Empty;
             BirdSuccess = string.Empty;
@@ -110,7 +114,7 @@ namespace CombatSimulator
             while (IsPlaying == true)
             {
                 Console.Clear();
-                if (roundCounter > 2)
+                if (RoundCounter > 2)
                 {
                     int powerChance = rng.Next(1, 11);
                     if (powerChance <= 3)
@@ -130,7 +134,7 @@ namespace CombatSimulator
                 if (InputValidator(userCombatChoice))
                 {
                     GameAction(userCombatChoice);
-                    roundCounter++;
+                    RoundCounter++;
                 }
                 WhoWon();
             }
@@ -138,16 +142,41 @@ namespace CombatSimulator
 
         static void RoundInfo()
         {
-            Console.WriteLine(PlayerSuccess);
-            Console.WriteLine(BirdSuccess);
+            if (RoundCounter > 0)
+            {
+                //Console.WriteLine(PlayerSuccess);
+                OldTimeyTextPrinter(PlayerSuccess, 10);
+                Thread.Sleep(PauseDuration / 2);
+                Console.WriteLine();
+                Console.WriteLine();
+                //Console.WriteLine(BirdSuccess);
+                OldTimeyTextPrinter(BirdSuccess, 10);
+                Thread.Sleep(PauseDuration);
+            }
+            else
+            {
+                OldTimeyTextPrinter("NEVER GIVE UP!!", 10);
+                Thread.Sleep(PauseDuration / 2);
+                Console.WriteLine();
+                Console.WriteLine();
+                OldTimeyTextPrinter("THESE BIRDS WILL STOP AT NOTHING!!", 10);
+                Thread.Sleep(PauseDuration);
+            }
             Console.WriteLine();
-        //have symbols showing number of nachos and birds remaining
-            Console.Write("Number of remaining BIRDS: " + BirdsRemaining);
-            //symbols showing no. of birds
             Console.WriteLine();
             Console.WriteLine();
-            Console.Write("Number of remaining NACHOS: " + NachosRemaining);
-            //symbols showing no. of nachos
+            Console.Write(("Number of remaining BIRDS:  " + BirdsRemaining).PadRight(33));
+            for (int i = 0; i < BirdsRemaining; i++)
+            {
+                Console.Write("*");
+            }
+            Console.WriteLine();
+            //Console.WriteLine();
+            Console.Write(("Number of remaining NACHOS: " + NachosRemaining).PadRight(33));
+            for (int i = 0; i < NachosRemaining; i++)
+            {
+                Console.Write("*");
+            }
             Console.WriteLine();
             Console.WriteLine();
 
@@ -162,8 +191,11 @@ namespace CombatSimulator
             Console.WriteLine();
             if (ChuckNorrisPower == true)
             {
-                Console.WriteLine("HOLY SMOKES!!  The Gods have bestowed upon you CHUCK NORRIS POWER!!");
+                //put in some ascii art of "Holy smokes!!"
+                Console.WriteLine();
+                Console.WriteLine("***HOLY SMOKES!!***  The Gods have bestowed upon you CHUCK NORRIS POWER!!");
                 Console.WriteLine("Enter 4 to throw a tornado of sand at the birds and wipe them out!!!  DO IT!!!");
+                Console.WriteLine();
                 Console.WriteLine();
             }
             Console.Write("Enter your combat choice: ");
@@ -214,7 +246,7 @@ namespace CombatSimulator
 
         static void GameAction(string userChoice_)
         {
-            int nachosTaken = 0;
+            //int nachosTaken = 0;
 
         //***maybe make some string arrays to give slightly differnt responses for "PlayerSuccess" and "BirdSuccess"
 
@@ -233,26 +265,14 @@ namespace CombatSimulator
                         }
                         PlayerSuccess = "THE ALKA-SELTZER WORKED!!  " + extraBirdsFlyAway + " other birds also flew away!!";
                         //Seagull's play
-                        nachosTaken = rng.Next(1, 5);
-                        NachosRemaining -= nachosTaken;
-                        if (NachosRemaining < 0)
-                        {
-                            NachosRemaining = 0;
-                        }
-                        BirdSuccess = "The Seagulls made off with " + nachosTaken + " of your chips!!";
+                        SeagullsTurn();
                     }
                     else
                     {
                         //Your play
                         PlayerSuccess = "Sorry, that bird is too smart for your shenanigans.";
                         //Seagull's play
-                        nachosTaken = rng.Next(1, 5);
-                        NachosRemaining -= nachosTaken;
-                        if (NachosRemaining < 0)
-                        {
-                            NachosRemaining = 0;
-                        }
-                        BirdSuccess = "The Seagulls made off with " + nachosTaken + " of your chips!!";
+                        SeagullsTurn();
                     }
                     break;
 
@@ -266,13 +286,7 @@ namespace CombatSimulator
                     }
                     PlayerSuccess = "Nice sand toss.  " + sandSuccess + " birds flew off.";
                     //Seagull's play
-                    nachosTaken = rng.Next(1, 5);
-                    NachosRemaining -= nachosTaken;
-                    if (NachosRemaining < 0)
-                    {
-                        NachosRemaining = 0;
-                    }
-                    BirdSuccess = "The Seagulls made off with " + nachosTaken + " of your chips!!";
+                    SeagullsTurn();
                     break;
 
                 case 3:
@@ -281,13 +295,7 @@ namespace CombatSimulator
                     NachosRemaining += chipsAdded;
                     PlayerSuccess = "You added " + chipsAdded + " chips back to your nachos.";
                     //Seagull's play
-                    nachosTaken = rng.Next(1, 5);
-                    NachosRemaining -= nachosTaken;
-                    if (NachosRemaining < 0)
-                    {
-                        NachosRemaining = 0;
-                    }
-                    BirdSuccess = "The Seagulls made off with " + nachosTaken + " of your chips!!";
+                    SeagullsTurn();
                     break;
 
                 case 4:
@@ -303,6 +311,19 @@ namespace CombatSimulator
             }
         }
 
+        static void SeagullsTurn()
+        {
+            int nachosTaken = 0;
+
+            nachosTaken = rng.Next(0, 4);
+            NachosRemaining -= nachosTaken;
+            if (NachosRemaining < 0)
+            {
+                NachosRemaining = 0;
+            }
+            BirdSuccess = "The Seagulls made off with " + nachosTaken + " of your chips!!";
+        }
+
         static void WhoWon()
         {
             if (NachosRemaining <= 0 || BirdsRemaining <= 0)
@@ -312,7 +333,7 @@ namespace CombatSimulator
                 SeagullShowdownText();
                 RoundInfo();
             //something other than a "pause" here???
-                Thread.Sleep(PauseDuration * 3);
+                Thread.Sleep(PauseDuration * 2);
                 Console.Clear();
                 if (NachosRemaining == 0)
                 {
@@ -362,8 +383,17 @@ namespace CombatSimulator
 
         static void SeagullShowdownText()
         {
-            Console.WriteLine("SEAGULL SHOWDOWN");
-            //ASCII ART
+            Console.WriteLine(@"
+  _____   ___   ____   ____  __ __  _      _           _____ __ __   ___   __    __  ___     ___   __    __  ____  
+ / ___/  /  _] /    T /    T|  T  T| T    | T         / ___/|  T  T /   \ |  T__T  T|   \   /   \ |  T__T  T|    \ 
+(   \_  /  [_ Y  o  |Y   __j|  |  || |    | |        (   \_ |  l  |Y     Y|  |  |  ||    \ Y     Y|  |  |  ||  _  Y
+ \__  TY    _]|     ||  T  ||  |  || l___ | l___      \__  T|  _  ||  O  ||  |  |  ||  D  Y|  O  ||  |  |  ||  |  |
+ /  \ ||   [_ |  _  ||  l_ ||  :  ||     T|     T     /  \ ||  |  ||     |l  `  '  !|     ||     |l  `  '  !|  |  |
+ \    ||     T|  |  ||     |l     ||     ||     |     \    ||  |  |l     ! \      / |     |l     ! \      / |  |  |
+  \___jl_____jl__j__jl___,_j \__,_jl_____jl_____j      \___jl__j__j \___/   \_/\_/  l_____j \___/   \_/\_/  l__j__j
+                                                                                                                   
+");
+            Console.WriteLine();
         }
     }
 }
