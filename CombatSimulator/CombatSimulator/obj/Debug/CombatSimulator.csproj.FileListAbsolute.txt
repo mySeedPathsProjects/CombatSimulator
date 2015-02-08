@@ -1,0 +1,6 @@
+C:\Users\nstephens\Documents\GitHub\CombatSimulator\CombatSimulator\CombatSimulator\bin\Debug\CombatSimulator.exe.config
+C:\Users\nstephens\Documents\GitHub\CombatSimulator\CombatSimulator\CombatSimulator\bin\Debug\CombatSimulator.exe
+C:\Users\nstephens\Documents\GitHub\CombatSimulator\CombatSimulator\CombatSimulator\bin\Debug\CombatSimulator.pdb
+C:\Users\nstephens\Documents\GitHub\CombatSimulator\CombatSimulator\CombatSimulator\obj\Debug\CombatSimulator.csprojResolveAssemblyReference.cache
+C:\Users\nstephens\Documents\GitHub\CombatSimulator\CombatSimulator\CombatSimulator\obj\Debug\CombatSimulator.exe
+C:\Users\nstephens\Documents\GitHub\CombatSimulator\CombatSimulator\CombatSimulator\obj\Debug\CombatSimulator.pdb
