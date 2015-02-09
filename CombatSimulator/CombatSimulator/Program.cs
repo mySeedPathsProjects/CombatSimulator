@@ -29,13 +29,14 @@ namespace CombatSimulator
         {
             Console.SetWindowSize(116, 38);
 
-            IntroAnimation();
+            //IntroAnimation();
+            //TitleSequence();
             //Instructions();
-            //RunGame();
+            RunGame();
 
 
             //for testing...
-            Console.ReadKey();
+            //Console.ReadKey();
         }
 
 
@@ -44,20 +45,70 @@ namespace CombatSimulator
         {
             Console.CursorVisible = false;
             IntroAniGraphics(0);
-            //pic of person at beach 
-            //text:  "I love being retired"
-            //text on screen "nothing like enjoying some nachos at the beach"
-            //clear text, birds start popping up in the image
-            //text "oh crap, not again..."
-            //text "get away from my nachos you damn birds!"
-            //words and image printed to screen "old typewriter" style:
+            Thread.Sleep(PauseDuration);
+            Console.SetCursorPosition(15, 18);
+            OldTimeyTextPrinter("Man....I love being retired.", 30);
+            Thread.Sleep(PauseDuration * 2);
+            Console.SetCursorPosition(15, 18);
+            OldTimeyTextPrinter("                              ", 8);
+            Console.SetCursorPosition(15, 18);
+            OldTimeyTextPrinter("Nothing like enjoying some NACHOS at the beach.", 30);
+            Thread.Sleep(PauseDuration * 2);
+            Console.SetCursorPosition(15, 18);
+            OldTimeyTextPrinter("                                                ", 8);
+            Thread.Sleep(PauseDuration * 2);
 
+            Console.Clear();
+            IntroAniGraphics(1);
+            Thread.Sleep(PauseDuration);
+            Console.SetCursorPosition(15, 18);
+            OldTimeyTextPrinter("OH CRAP!!  NOT AGAIN....!", 30);
+            Thread.Sleep(PauseDuration);
 
-            //"SEAGULL SHOWDOWN" ASCII image (***SEPARATE FUNCTION****)
-            //image: person on one side of screen, seagull on other
+            Console.Clear();
+            IntroAniGraphics(2);
+            Thread.Sleep(PauseDuration);
+            Console.Clear();
+            IntroAniGraphics(3);
+            Thread.Sleep(PauseDuration / 4);
+            Console.Clear();
+            IntroAniGraphics(4);
+            Thread.Sleep(PauseDuration / 2);
+            Console.SetCursorPosition(15, 32);
+            OldTimeyTextPrinter("GET AWAY FROM MY NACHOS YOU DAMN BIRDS!!!", 30);
+            Thread.Sleep(PauseDuration * 3);
         }
 
+        static void TitleSequence()
+        {
+            //"SEAGULL SHOWDOWN" ASCII image (***SEPARATE FUNCTION****)
+            //image: person on one side of screen, seagull on other
+            Console.Clear();
+            SeagullShowdownText_1();
+            Thread.Sleep(PauseDuration / 2);
+            Console.Clear();
+            SeagullShowdownText_2();
+            Thread.Sleep(PauseDuration / 2);
+            //Console.WriteLine();
+            //Console.WriteLine();
+            ManandSeagull_2();
+            Thread.Sleep(PauseDuration);
 
+            for (int i = 0; i < 3; i++)
+            {
+                Console.Clear();
+                SeagullShowdownText_3();
+                ManandSeagull_2();
+                Thread.Sleep(PauseDuration / 4);
+                Console.Clear();
+                SeagullShowdownText_2();
+                ManandSeagull_2();
+                Thread.Sleep(PauseDuration / 4);
+            }
+
+            Thread.Sleep(PauseDuration * 2);
+
+        }
 
         /// <summary>
         /// Prints instructions on how to play the game.
@@ -67,7 +118,7 @@ namespace CombatSimulator
             Console.CursorVisible = false;
             Console.Clear();
 
-            SeagullShowdownText();
+            SeagullShowdownText_2();
             Thread.Sleep(PauseDuration / 2);
             Console.WriteLine();
             OldTimeyTextPrinter("Man, you've been through this crap before.  Just trying to enjoy some nachos at the beach \nand a swarm of Seagulls come and eat all your food, ruining the day.", 20);
@@ -100,6 +151,7 @@ namespace CombatSimulator
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
+            Thread.Sleep(PauseDuration);
             Console.WriteLine("Press any key to continue: ");
             Console.ReadKey();
         }
@@ -109,8 +161,8 @@ namespace CombatSimulator
             IsPlaying = true;
             RoundCounter = 0;
        //***REMEMBER TO CHANGE VALUES BACK TO 20 AND 30
-            NachosRemaining = 1;
-            BirdsRemaining = 30;
+            NachosRemaining = 20;
+            BirdsRemaining = 1;
             ChuckNorrisPower = false;
             PlayerSuccess = string.Empty;
             BirdSuccess = string.Empty;
@@ -128,7 +180,7 @@ namespace CombatSimulator
                         }
                     }
                 }
-                SeagullShowdownText();
+                SeagullShowdownText_2();
                 RoundInfo();
                 BasicInstructions();
 
@@ -340,7 +392,7 @@ namespace CombatSimulator
             if (NachosRemaining <= 0)
             {
                 Console.Clear();
-                SeagullShowdownText();
+                SeagullShowdownText_2();
                 RoundInfo();
                 Thread.Sleep(PauseDuration * 2);
                 Console.Clear();
@@ -355,7 +407,7 @@ namespace CombatSimulator
                 }
                 YouLost();
                 Console.WriteLine();
-                OldTimeyTextPrinter("         I can't believe you were run off by some pesky birds!!", 20);
+                OldTimeyTextPrinter("         You can't win against some pesky birds???", 20);
                 Console.WriteLine();
                 Console.WriteLine();
                 Thread.Sleep(PauseDuration);
@@ -366,7 +418,7 @@ namespace CombatSimulator
             else if (BirdsRemaining <= 0)
             {
                 Console.Clear();
-                SeagullShowdownText();
+                SeagullShowdownText_2();
                 RoundInfo();
                 Thread.Sleep(PauseDuration * 2);
                 Console.Clear();
@@ -381,7 +433,7 @@ namespace CombatSimulator
                 }
                 YouWon();
                 Console.WriteLine();
-                OldTimeyTextPrinter("         Damn birds are no match for your wicked skills!!", 20);
+                OldTimeyTextPrinter("         Damn birds are no match for your awesome skills!!", 20);
                 Console.WriteLine();
                 Console.WriteLine();
                 Thread.Sleep(PauseDuration);
@@ -425,7 +477,6 @@ namespace CombatSimulator
             switch (picNumber_)
             {
                 case 0:
-                    Thread.Sleep(PauseDuration);
                     Console.WriteLine(@"
                  
 
@@ -464,14 +515,13 @@ namespace CombatSimulator
                     break;
 
                 case 1:
-                    Thread.Sleep(PauseDuration);
                     Console.WriteLine(@"
                  
 
                                                                               .     :     .
                                                                             .  :    |    :  .
                        _,___                                                 .  |   |   |  ,
-             __.=""=._/'/---\                                                 \  |     |  /
+             __.=""=._/' /---\                                                 \  |     |  /
             `'=.__,    (                                                  .     ,-''''`-.     .
             ,'=='   ;  `=,                                                  '- /         \ -'
             `^`^`^'`',    ;                                                   |           |
@@ -503,101 +553,22 @@ namespace CombatSimulator
                     break;
 
                 case 2:
-                    Thread.Sleep(PauseDuration);
                     Console.WriteLine(@"
                  
 
                                                                               .     :     .
                                                                             .  :    |    :  .
-                                                                             .  |   |   |  ,
-                                                                              \  |     |  /
-                                                                          .     ,-''''`-.     .
-                                                                            '- /         \ -'
-                                                                              |           |
-                                                                        - --- |           | --- -
-                                                                              |           |
-                                                                            _- \         / -_
-                                                                          .     `-.___,-'     .
-                                                                              /  |     |  \
-                                                                            .'  |   |   |  `.
-                                                                               :    |    :
-                                                                              .     :     .
-                                                                                    .
- 
-
-              
-
-    ---....___________________________________  ___ _______ __ _ ___ ___ __ _ _ _____ _ _ ___ __  _ ___ _____
-                                              ---...__ =-= = -_= -=_= _-=_-_ -=- =-_=_-_ -=-== _-=_-_ -=- =-
-                                                     ---...___ =-= = -_= -=_= _-=_-_ -=- =-_=_-_ -=-== 
-                          <()>                                 ```--.._= -_= -_= _-=- -_= _=-_= _-=- -_
-                           #\                                        ``--._=-_ =-=_-= _-= _=-_ =-=_-
-                           ##\/\                                           ``-._=_-=_- =_-=_= _-=- --
-                           #####\_                                           `-._-=_-_=-=-_ =-=_=-
-                                                                                 `-._=-_=-=_-= _-= _-=_-_ -=- =-
-                                                                                   `-._= _-=- -_-=_-_ -=- =-
-                                                                                      `-._=-_=-=_-= _-= 
-
-");
-                    break;
-
-                case 3:
-                    Thread.Sleep(PauseDuration);
-                    Console.WriteLine(@"
-                 
-
-                                                                              .     :     .
-                                                                            .  :    |    :  .
-                                                                             .  |   |   |  ,
-                                                                              \  |     |  /
-                                                                          .     ,-''''`-.     .
-                                                                            '- /         \ -'
-                                                                              |           |
-                                                                        - --- |           | --- -
-                                                                              |           |
-                                                                            _- \         / -_
-                                                                          .     `-.___,-'     .
-                                                                              /  |     |  \
-                                                                            .'  |   |   |  `.
-                                                                               :    |    :
-                                                                              .     :     .
-                                                                                    .
- 
-
-              
-
-    ---....___________________________________  ___ _______ __ _ ___ ___ __ _ _ _____ _ _ ___ __  _ ___ _____
-                                              ---...__ =-= = -_= -=_= _-=_-_ -=- =-_=_-_ -=-== _-=_-_ -=- =-
-                                                     ---...___ =-= = -_= -=_= _-=_-_ -=- =-_=_-_ -=-== 
-                          <()>                                 ```--.._= -_= -_= _-=- -_= _=-_= _-=- -_
-                           #\                                        ``--._=-_ =-=_-= _-= _=-_ =-=_-
-                           ##\/\                                           ``-._=_-=_- =_-=_= _-=- --
-                           #####\_                                           `-._-=_-_=-=-_ =-=_=-
-                                                                                 `-._=-_=-=_-= _-= _-=_-_ -=- =-
-                                                                                   `-._= _-=- -_-=_-_ -=- =-
-                                                                                      `-._=-_=-=_-= _-= 
-
-");
-                    break;
-
-                case 4:
-                    Thread.Sleep(PauseDuration);
-                    Console.WriteLine(@"
-                 
-
-                                                                              .     :     .
-                                                                            .  :    |    :  .
-                                                                             .  |   |   |  ,
-                                                                              \  |     |  /
-                                                                          .     ,-''''`-.     .
-                                                                            '- /  __ __  \ -'
-                                                                              |  | .I. |  |
-                                                                        - --- |   --^--   | --- -
-                                                                              |    ___    |
-                                                                            _- \  (___)  / -_
-                                                                          .     `-.___,-'     .
-                                                                              /  |     |  \
-                                                                            .'  |   |   |  `.
+                       _,___                                                 .  |   |   |  ,
+             __.=""=._/' /---\                                                 \  |     |  /
+            `'=.__,    (                                                  .     ,-''''`-.     .
+            ,'=='   ;  `=,                                                  '- /         \ -'
+            `^`^`^'`',    ;                                                   |           |
+                      '; (                        ___   ________        - --- |           | --- -
+                        ``                       /---<9;/  ,__-==`            |           |
+                                                ./~~( `)/`                  _- \         / -_
+                                             ,-'_/// \  }                 .     `-.___,-'     .
+                                              ~       XX\\                    /  |     |  \
+                                                          \                 .'  |   |   |  `.
                                                                                :    |    :
                                                                               .     :     .
                                                                                     .
@@ -619,15 +590,108 @@ namespace CombatSimulator
 ");
                     break;
 
+                case 3:
+                    Console.WriteLine(@"
+ 
+                
+                                                                              .     :     .
+                                                                            .  :    |    :  .
+                       _,___                                                 .  |   |   |  ,
+             __.=""=._/' /---\                                                 \  |     |  /
+            `'=.__,    (                                                  .     ,-''''`-.     .
+            ,'=='   ;  `=,                                                  '- /         \ -'
+            `^`^`^'`',    ;                                                   |           |
+                      '; (                        ___   ________        - --- |           | --- -
+                        ``                       /---<9;/  ,__-==`            |           |
+                                                ./~~( `)/`                  _- \         / -_
+                                             ,-'_/// \  }                 .     `-.___,-'     .
+                                              ~       XX\\                    /  |     |  \
+      .`.   _ ____                                        \                 .'  |   |   |  `.
+    __;_ \ /,//---\                                                            :    |    :
+    --, `._) (                                                                .     :     .
+     '//,,,  |                                                                      .
+          )_/                
+         /_|                 
+                             
+                                
+    ---....___________________________________  ___ _______ __ _ ___ ___ __ _ _ _____ _ _ ___ __  _ ___ _____
+                                              ---...__ =-= = -_= -=_= _-=_-_ -=- =-_=_-_ -=-== _-=_-_ -=- =-
+                         \    /                      ---...___ =-= = -_= -=_= _-=_-_ -=- =-_=_-_ -=-== 
+                          \()/                                 ```--.._= -_= -_= _-=- -_= _=-_= _-=- -_
+                           #\                                        ``--._=-_ =-=_-= _-= _=-_ =-=_-
+                           ##\/\                                           ``-._=_-=_- =_-=_= _-=- --
+                           #####\_                                           `-._-=_-_=-=-_ =-=_=-
+                                                                                 `-._=-_=-=_-= _-= _-=_-_ -=- =-
+                                                                                   `-._= _-=- -_-=_-_ -=- =-
+                                                                                      `-._=-_=-=_-= _-= 
 
+");
+                    break;
+
+                case 4:
+                    Console.WriteLine(@"
+ 
+                
+                                                                              .     :     .
+                                                                            .  :    |    :  .
+                       _,___                                                 .  |   |   |  ,
+             __.=""=._/' /---\                                                 \  |     |  /
+            `'=.__,    (                                                  .     ,-''''`-.     .
+            ,'=='   ;  `=,                                                  '- /  __ __  \ -'
+            `^`^`^'`',    ;                                                   |  | .I. |  |
+                      '; (                        ___   ________        - --- |   --^--   | --- -
+                        ``                       /---<9;/  ,__-==`            |    ___    |
+                                                ./~~( `)/`                  _- \  (___)  / -_
+                                             ,-'_/// \  }                 .     `-.___,-'     .
+                                              ~       XX\\                    /  |     |  \
+      .`.   _ ____                                        \                 .'  |   |   |  `.
+    __;_ \ /,//---\                                                            :    |    :
+    --, `._) (                                                                .     :     .
+     '//,,,  |                              ,                                       .
+          )_/                 ,_     ,     .'<_
+         /_|                 _> `'-,'(__.-' __<
+                             >_.--(.. )  =;`
+                                  `V-'`'\/``
+    ---....___________________________________  ___ _______ __ _ ___ ___ __ _ _ _____ _ _ ___ __  _ ___ _____
+                                              ---...__ =-= = -_= -=_= _-=_-_ -=- =-_=_-_ -=-== _-=_-_ -=- =-
+                         \    /                      ---...___ =-= = -_= -=_= _-=_-_ -=- =-_=_-_ -=-== 
+                          \()/                                 ```--.._= -_= -_= _-=- -_= _=-_= _-=- -_
+                           #\                                        ``--._=-_ =-=_-= _-= _=-_ =-=_-
+                           ##\/\                                           ``-._=_-=_- =_-=_= _-=- --
+                           #####\_                                           `-._-=_-_=-=-_ =-=_=-
+                                                                                 `-._=-_=-=_-= _-= _-=_-_ -=- =-
+                                                                                   `-._= _-=- -_-=_-_ -=- =-
+                                                                                      `-._=-_=-=_-= _-= 
+
+");
+                    break;
 
                 default:
                     break;
             }
         }
 
-        static void SeagullShowdownText()
+        static void SeagullShowdownText_1()
         {
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(@"
+  _____   ___   ____   ____  __ __  _      _         
+ / ___/  /  _] /    T /    T|  T  T| T    | T        
+(   \_  /  [_ Y  o  |Y   __j|  |  || |    | |       
+ \__  TY    _]|     ||  T  ||  |  || l___ | l___      
+ /  \ ||   [_ |  _  ||  l_ ||  :  ||     T|     T    
+ \    ||     T|  |  ||     |l     ||     ||     |    
+  \___jl_____jl__j__jl___,_j \__,_jl_____jl_____j      
+                                                                                                                   
+");
+            Console.WriteLine();
+        }
+
+        static void SeagullShowdownText_2()
+        {
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(@"
   _____   ___   ____   ____  __ __  _      _           _____ __ __   ___   __    __  ___     ___   __    __  ____  
  / ___/  /  _] /    T /    T|  T  T| T    | T         / ___/|  T  T /   \ |  T__T  T|   \   /   \ |  T__T  T|    \ 
@@ -640,6 +704,84 @@ namespace CombatSimulator
 ");
             Console.WriteLine();
         }
+
+        static void SeagullShowdownText_3()
+        {
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine(@"
+  _____   ___   ____   ____  __ __  _      _           _____ __ __   ___   __    __  ___     ___   __    __  ____  
+ / ___/  /  _] /    T /    T|  T  T| T    | T         / ___/|  T  T /   \ |  T__T  T|   \   /   \ |  T__T  T|    \ 
+(   \_  /  [_ Y  o  |Y   __j|  |  || |    | |        (   \_ |  l  |Y     Y|  |  |  ||    \ Y     Y|  |  |  ||  _  Y
+ \__  TY    _]|     ||  T  ||  |  || l___ | l___      \__  T|  _  ||  O  ||  |  |  ||  D  Y|  O  ||  |  |  ||  |  |
+ /  \ ||   [_ |  _  ||  l_ ||  :  ||     T|     T     /  \ ||  |  ||     |l  `  '  !|     ||     |l  `  '  !|  |  |
+ \    ||     T|  |  ||     |l     ||     ||     |     \    ||  |  |l     ! \      / |     |l     ! \      / |  |  |
+  \___jl_____jl__j__jl___,_j \__,_jl_____jl_____j      \___jl__j__j \___/   \_/\_/  l_____j \___/   \_/\_/  l__j__j
+                                                                                                                   
+");
+            Console.WriteLine();
+        }
+
+
+        //NOT USING...
+        static void ManandSeagull_1()
+        {
+            Console.WriteLine(@"
+
+                .-'--.
+              .'      '.
+             /     _    `-.
+            /      .\-     \,  ,
+           ;       .-|-'    \####,
+           |,       .-|-'    ;####
+          ,##         `     ,|###'
+        #,####, '#,        ,#|^;#
+        `######  `#####,|##' |`)|
+         `#####    ```o\`\o_.| ;\
+          (-`\#,    .-'` |`  : `;
+          `\ ;\#,         \   \-'
+            )( \#    C,_   \   ;
+            (_,  \  /   `'./   |
+              \  / | .-`'--'`. |
+               | ( \   ,  /_,  |
+               \    `   ``     /
+                '-.__     // .'
+                     `'`.__.'
+
+");
+
+        }
+
+        static void ManandSeagull_2()
+        {
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(@"
+                                                   
+                .-'--.                                                                  _______        
+              .'      '.                                                            _.-'       ''...._
+             /     _    `-.                                                       .'        .--.    '.`
+            /      .\-     \,  ,                                                 : .--.    :    :     '-.
+           ;       .-|-'    \####,                                              : :    :   :    :       :`
+           |,       .-|-'    ;####                                              : :  @ :___:  @ : __     '`.
+          ,##         `     ,|###'                                       _____..:---''''   `----''  `.   .''
+        #,####, '#,        ,#|^;#                                     -''                      ___j  :   :
+        `######  `#####,|##' |`)|                                    /                   __..''      :    `.
+         `#####    ```o\`\o_.| ;\                                   /---------_______--''        __..'   /``
+          (-`\#,    .-'` |`  : `;                                   \ _______________________--''       /
+          `\ ;\#,         \   \-'                                                    --''               \
+            )( \#    C,_   \   ;                                                     :                :`.:
+            (_,  \  /   `'./   |                                                      :              /
+              \  / | .-`'--'`. |                                                       \            /
+               | ( \   ,  /_,  |                                                        \          .'
+               \    `   ``     /                                                         :         :
+                '-.__     // .'                                                           :        \
+                     `'`.__.'                                                             :         \
+
+");
+
+        }
+
 
         static void ChuckNorrisPowerText()
         {
@@ -663,9 +805,9 @@ namespace CombatSimulator
                                                       {=_=_-  \   \     
                        \|//                      *     {_-_   |   /   
                      -/_ /            ,-.   *           '-.   |  /    .===,
-                       _\\_           |  \    *      .--.__\  |_(_,==`  ( o)'-.......
-                       \_  \          x  |   *      `---.=_ `     ;      `/  ________\
-                 ,///   >   )         \_  \             `,-_       ;    .'------------\
+                       _\\_           |  \    *      .--.__\  |_(_,==`  ( o)'-...
+                       \_  \          x  |   *      `---.=_ `     ;      `/ -----\
+                 ,///   >   )         \_  \             `,-_       ;    .'
                 / + +\ /   /         _/ )_/               {=_       ;=~`    
                 |     )  \/        _/ \/                   `//__,-=~`
                 /\__D/    \      _/    )                   <<__ \\__
