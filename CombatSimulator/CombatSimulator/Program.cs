@@ -12,8 +12,6 @@ namespace CombatSimulator
         //GLOBAL VARIABLES
         static Random rng = new Random();
         static int PauseDuration = 1000;
-        static int CursorX = Console.WindowWidth;
-        static int CursorY = Console.WindowHeight;
 
         static bool IsPlaying = true;
         static int RoundCounter = 0;
@@ -39,7 +37,9 @@ namespace CombatSimulator
         }
 
 
-
+        /// <summary>
+        /// animation sequence to start off game
+        /// </summary>
         static void IntroAnimation()
         {
             Console.CursorVisible = false;
@@ -78,21 +78,21 @@ namespace CombatSimulator
             Thread.Sleep(PauseDuration * 3);
         }
 
+        /// <summary>
+        /// more animation...title of game and picture of players
+        /// </summary>
         static void TitleSequence()
         {
-            //"SEAGULL SHOWDOWN" ASCII image (***SEPARATE FUNCTION****)
-            //image: person on one side of screen, seagull on other
             Console.Clear();
             SeagullShowdownText_1();
             Thread.Sleep(PauseDuration / 2);
             Console.Clear();
             SeagullShowdownText_2();
             Thread.Sleep(PauseDuration / 2);
-            //Console.WriteLine();
-            //Console.WriteLine();
             ManandSeagull_2();
             Thread.Sleep(PauseDuration);
 
+            //make title of game "blink" 3 times
             for (int i = 0; i < 3; i++)
             {
                 Console.Clear();
@@ -151,24 +151,31 @@ namespace CombatSimulator
             Console.WriteLine();
             Console.WriteLine();
             Thread.Sleep(PauseDuration);
+
+            //instruction screen will remain until user presses a key to start the game
             Console.WriteLine("Press any key to continue: ");
             Console.ReadKey();
         }
 
+        /// <summary>
+        /// Main game function, collects input and processes it.
+        /// </summary>
         static void RunGame()
         {
             IsPlaying = true;
             RoundCounter = 0;
-       //***REMEMBER TO CHANGE VALUES BACK TO 20 AND 30
+       //***REMEMBER TO CHANGE VALUES BACK TO 20 AND 30 after testing
             NachosRemaining = 20;
             BirdsRemaining = 30;
             ChuckNorrisPower = false;
             PlayerSuccess = string.Empty;
             BirdSuccess = string.Empty;
 
+            //game runs until player wins or loses and gets to choose to quit
             while (IsPlaying == true)
             {
                 Console.Clear();
+                //once "Chuck Norris Power" is turned on it remains on.  Has 30% random chance of turning on only after 4th round of play.
                 if (ChuckNorrisPower == false)
                 {
                     if (RoundCounter > 4)
@@ -179,33 +186,42 @@ namespace CombatSimulator
                         }
                     }
                 }
+                //Display title of game
                 SeagullShowdownText_2();
+                //Display current round information (such as points remaining, etc)
                 RoundInfo();
+                //Display basic combat instructions
                 BasicInstructions();
 
+                //Get user input, then validate.  If valid then process input by game logic and increase counter.
                 string userCombatChoice = Console.ReadLine();
                 if (InputValidator(userCombatChoice))
                 {
                     GameAction(userCombatChoice);
                     RoundCounter++;
                 }
+                //check to see if player has won or lost
                 WhoWon();
             }
         }
 
+        /// <summary>
+        /// Displays information from previous round of game play
+        /// </summary>
         static void RoundInfo()
         {
+            //after first round 
             if (RoundCounter > 0)
             {
-                //Console.WriteLine(PlayerSuccess);
+                //Print results of Player and Bird success results from last round of play
                 OldTimeyTextPrinter(PlayerSuccess, 10);
                 Thread.Sleep(PauseDuration / 2);
                 Console.WriteLine();
                 Console.WriteLine();
-                //Console.WriteLine(BirdSuccess);
                 OldTimeyTextPrinter(BirdSuccess, 10);
                 Thread.Sleep(PauseDuration);
             }
+            //when game first starts, before there are any play results yet
             else
             {
                 Thread.Sleep(PauseDuration / 2);
@@ -219,6 +235,7 @@ namespace CombatSimulator
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
+            //print number of birds and nachos remaining and include graphical representation of score
             Console.Write(("Number of remaining BIRDS:  " + BirdsRemaining).PadRight(33));
             for (int i = 0; i < BirdsRemaining; i++)
             {
@@ -236,6 +253,9 @@ namespace CombatSimulator
 
         }
 
+        /// <summary>
+        /// Basic instructions of game printed every round
+        /// </summary>
         static void BasicInstructions()
         {
             //print basic instructions
@@ -243,9 +263,9 @@ namespace CombatSimulator
             Console.WriteLine("Enter 2 to kick sand at the damn birds...");
             Console.WriteLine("Enter 3 to replenish your chips if running low...");
             Console.WriteLine();
+            //if Chuck Norris Power is turned on print following text to inform player and tell them how to use it.
             if (ChuckNorrisPower == true)
             {
-                //put in some ascii art of "Holy smokes!!"
                 ChuckNorrisPowerText();
                 Console.WriteLine();
                 Console.WriteLine("***HOLY SMOKES!!***  The Gods have bestowed upon you CHUCK NORRIS POWER!!");
@@ -263,6 +283,7 @@ namespace CombatSimulator
         /// <returns>true if input is valid</returns>
         static bool InputValidator(string userInput_)
         {
+            //if input is more or less than 1 digit, it's invalid
             if (userInput_.Length != 1)
             {
                 Console.WriteLine();
@@ -272,10 +293,12 @@ namespace CombatSimulator
                 Thread.Sleep(PauseDuration);
                 return false;
             }
+            //if input is a 1, 2, or a 3 then the input is valid
             else if ("123".Contains(userInput_[0]))
             {
                 return true;
             }
+            //input of 4 is valid only if Chuck Norris Power is enabled, otherwise invalid
             else if (userInput_ == "4")
             {
                 if (ChuckNorrisPower == true)
@@ -292,6 +315,7 @@ namespace CombatSimulator
                     return false;
                 }
             }
+            //if input is invalid (for a case i didn't think of testing for...)
             else
             {
                 Console.WriteLine();
@@ -305,29 +329,37 @@ namespace CombatSimulator
 
         }
 
+        /// <summary>
+        /// Main game logic, using a rng to determine results from user input
+        /// </summary>
+        /// <param name="userChoice_">user's input while playing game</param>
         static void GameAction(string userChoice_)
         {
-            //int nachosTaken = 0;
-
         //***maybe make some string arrays to give slightly differnt responses for "PlayerSuccess" and "BirdSuccess"
-
+            //turn user choice into an integer number
             switch (Int32.Parse(userChoice_))
             {
+                //combat choice 1
                 case 1:
+                    //if the Alka-Seltzer works...
                     if (rng.Next(2) == 0)
                     {
-                        //Your play
+                        //Your play first
                         BirdsRemaining--;
+                        //rng to see how many extra birds fly away
                         int extraBirdsFlyAway = rng.Next(2, 5);
                         BirdsRemaining -= extraBirdsFlyAway;
+                        //to prevent score from going below zero
                         if (BirdsRemaining < 0)
                         {
                             BirdsRemaining = 0;
                         }
+                        //string created that prints in RoundInfo() function
                         PlayerSuccess = "THE ALKA-SELTZER WORKED!!  " + extraBirdsFlyAway + " other birds also flew away!!";
                         //Seagull's play
                         SeagullsTurn();
 
+                        //show animation of play results
                         Console.Clear();
                         BirdEatsAlkaSeltzer();
                         Thread.Sleep(PauseDuration);
@@ -339,6 +371,7 @@ namespace CombatSimulator
                         //Seagull's play
                         SeagullsTurn();
 
+                        //animation of play results
                         Console.Clear();
                         BirdAvoidsAlkaSeltzer();
                         Thread.Sleep(PauseDuration * 2);
@@ -347,6 +380,7 @@ namespace CombatSimulator
 
                 case 2:
                     //Your play
+                    //effectiveness of sand kick
                     int sandSuccess = rng.Next(1, 4);
                     BirdsRemaining -= sandSuccess;
                     if (BirdsRemaining < 0)
@@ -357,6 +391,7 @@ namespace CombatSimulator
                     //Seagull's play
                     SeagullsTurn();
 
+                    //graphic of play result
                     Console.Clear();
                     KickSand();
                     Thread.Sleep(1500);
@@ -364,11 +399,13 @@ namespace CombatSimulator
 
                 case 3:
                     //Your play
+                    //determine number of chips added
                     int chipsAdded = rng.Next(2, 5);
                     NachosRemaining += chipsAdded;
                     PlayerSuccess = "You added " + chipsAdded + " chips back to your nachos.";
                     //Seagull's play
                     SeagullsTurn();
+                    //no animation or graphics for adding chips
                     break;
 
                 case 4:
@@ -378,6 +415,7 @@ namespace CombatSimulator
                     //Seagull's play
                     BirdSuccess = "Seagulls are no match for a Chuck Norris size tornado of sand!!";
 
+                    //Chuck Norris Power animation
                     Console.Clear();
                     ChuckNorrisFace();
                     Thread.Sleep(PauseDuration * 2);
@@ -388,6 +426,9 @@ namespace CombatSimulator
             }
         }
 
+        /// <summary>
+        /// determinds number of chips seagulls take per round
+        /// </summary>
         static void SeagullsTurn()
         {
             int nachosTaken = 0;
@@ -401,18 +442,22 @@ namespace CombatSimulator
             BirdSuccess = "The Seagulls made off with " + nachosTaken + " of your chips!!";
         }
 
+        /// <summary>
+        /// checks to see if you or the seagull has won
+        /// </summary>
         static void WhoWon()
         {
             //YOU LOST!!
             if (NachosRemaining <= 0)
             {
+                //show final round info
                 Console.Clear();
                 SeagullShowdownText_2();
                 RoundInfo();
                 Thread.Sleep(PauseDuration * 3);
                 Console.Clear();
                 Console.CursorVisible = false;
-
+                //animation if you lost
                 for (int i = 0; i < 3; i++)
                 {
                     YouLost();
@@ -426,19 +471,20 @@ namespace CombatSimulator
                 Console.WriteLine();
                 Console.WriteLine();
                 Thread.Sleep(PauseDuration);
-
+                //ask user if they want to play again
                 PlayAgain();
             }
             //YOU WON!!
             else if (BirdsRemaining <= 0)
             {
+                //show final round info
                 Console.Clear();
                 SeagullShowdownText_2();
                 RoundInfo();
                 Thread.Sleep(PauseDuration * 3);
                 Console.Clear();
                 Console.CursorVisible = false;
-
+                //animation if you won
                 for (int i = 0; i < 3; i++)
                 {
                     YouWon();
@@ -452,11 +498,14 @@ namespace CombatSimulator
                 Console.WriteLine();
                 Console.WriteLine();
                 Thread.Sleep(PauseDuration);
-
+                //ask user to play again
                 PlayAgain();
             }
         }
 
+        /// <summary>
+        /// ask user to play again, run game again if yes, exit game if no
+        /// </summary>
         static void PlayAgain()
         {
             Console.WriteLine();
