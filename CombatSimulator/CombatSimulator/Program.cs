@@ -27,13 +27,12 @@ namespace CombatSimulator
 
         static void Main(string[] args)
         {
-            Console.SetWindowSize(116, 38);
+            Console.SetWindowSize(116, 50);
 
-            //IntroAnimation();
-            //TitleSequence();
-            //Instructions();
+            IntroAnimation();
+            TitleSequence();
+            Instructions();
             RunGame();
-
 
             //for testing...
             //Console.ReadKey();
@@ -129,7 +128,7 @@ namespace CombatSimulator
             Thread.Sleep(PauseDuration / 2);
             Console.WriteLine();
             Console.WriteLine();
-            OldTimeyTextPrinter("You've also been honing your skills at throwing sand.  You're totally ready for this!!", 20);
+            OldTimeyTextPrinter("You've also been honing your skills at kicking sand.  You're totally ready for this!!", 20);
             Thread.Sleep(PauseDuration);
             Console.WriteLine();
             Console.WriteLine();
@@ -162,7 +161,7 @@ namespace CombatSimulator
             RoundCounter = 0;
        //***REMEMBER TO CHANGE VALUES BACK TO 20 AND 30
             NachosRemaining = 20;
-            BirdsRemaining = 1;
+            BirdsRemaining = 30;
             ChuckNorrisPower = false;
             PlayerSuccess = string.Empty;
             BirdSuccess = string.Empty;
@@ -241,7 +240,7 @@ namespace CombatSimulator
         {
             //print basic instructions
             Console.WriteLine("Enter 1 to use an Alka-Seltzer tablet...");
-            Console.WriteLine("Enter 2 to throw sand at the damn birds...");
+            Console.WriteLine("Enter 2 to kick sand at the damn birds...");
             Console.WriteLine("Enter 3 to replenish your chips if running low...");
             Console.WriteLine();
             if (ChuckNorrisPower == true)
@@ -328,6 +327,10 @@ namespace CombatSimulator
                         PlayerSuccess = "THE ALKA-SELTZER WORKED!!  " + extraBirdsFlyAway + " other birds also flew away!!";
                         //Seagull's play
                         SeagullsTurn();
+
+                        Console.Clear();
+                        BirdEatsAlkaSeltzer();
+                        Thread.Sleep(PauseDuration);
                     }
                     else
                     {
@@ -335,6 +338,10 @@ namespace CombatSimulator
                         PlayerSuccess = "Sorry, that bird is too smart for your shenanigans.";
                         //Seagull's play
                         SeagullsTurn();
+
+                        Console.Clear();
+                        BirdAvoidsAlkaSeltzer();
+                        Thread.Sleep(PauseDuration * 2);
                     }
                     break;
 
@@ -346,9 +353,13 @@ namespace CombatSimulator
                     {
                         BirdsRemaining = 0;
                     }
-                    PlayerSuccess = "Nice sand toss.  " + sandSuccess + " birds flew off.";
+                    PlayerSuccess = "Nice sand kick!!  " + sandSuccess + " birds flew off.";
                     //Seagull's play
                     SeagullsTurn();
+
+                    Console.Clear();
+                    KickSand();
+                    Thread.Sleep(1500);
                     break;
 
                 case 3:
@@ -365,7 +376,11 @@ namespace CombatSimulator
                     BirdsRemaining = 0;
                     PlayerSuccess = "OH YEAH!!!  You wiped them all out!!  Time to chill with some nachos!!";
                     //Seagull's play
-                    BirdSuccess = "Seagulls are no match for a Chuck Norris sized tornado of sand!!";
+                    BirdSuccess = "Seagulls are no match for a Chuck Norris size tornado of sand!!";
+
+                    Console.Clear();
+                    ChuckNorrisFace();
+                    Thread.Sleep(PauseDuration * 2);
                     break;
 
                 default:
@@ -394,7 +409,7 @@ namespace CombatSimulator
                 Console.Clear();
                 SeagullShowdownText_2();
                 RoundInfo();
-                Thread.Sleep(PauseDuration * 2);
+                Thread.Sleep(PauseDuration * 3);
                 Console.Clear();
                 Console.CursorVisible = false;
 
@@ -420,7 +435,7 @@ namespace CombatSimulator
                 Console.Clear();
                 SeagullShowdownText_2();
                 RoundInfo();
-                Thread.Sleep(PauseDuration * 2);
+                Thread.Sleep(PauseDuration * 3);
                 Console.Clear();
                 Console.CursorVisible = false;
 
@@ -453,7 +468,6 @@ namespace CombatSimulator
             IsPlaying = false;
         }
 
-
         /// <summary>
         /// Prints text to screen one char at a time
         /// </summary>
@@ -469,6 +483,7 @@ namespace CombatSimulator
                 Thread.Sleep(pause);
             }
         }
+
 
         //************GRAPHICS**************
 
@@ -722,36 +737,6 @@ namespace CombatSimulator
             Console.WriteLine();
         }
 
-
-        //NOT USING...
-        static void ManandSeagull_1()
-        {
-            Console.WriteLine(@"
-
-                .-'--.
-              .'      '.
-             /     _    `-.
-            /      .\-     \,  ,
-           ;       .-|-'    \####,
-           |,       .-|-'    ;####
-          ,##         `     ,|###'
-        #,####, '#,        ,#|^;#
-        `######  `#####,|##' |`)|
-         `#####    ```o\`\o_.| ;\
-          (-`\#,    .-'` |`  : `;
-          `\ ;\#,         \   \-'
-            )( \#    C,_   \   ;
-            (_,  \  /   `'./   |
-              \  / | .-`'--'`. |
-               | ( \   ,  /_,  |
-               \    `   ``     /
-                '-.__     // .'
-                     `'`.__.'
-
-");
-
-        }
-
         static void ManandSeagull_2()
         {
             Console.BackgroundColor = ConsoleColor.Black;
@@ -782,7 +767,6 @@ namespace CombatSimulator
 
         }
 
-
         static void ChuckNorrisPowerText()
         {
             Console.BackgroundColor = ConsoleColor.Yellow;
@@ -795,6 +779,277 @@ namespace CombatSimulator
                                                                              ");
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        static void ChuckNorrisFace()
+        {
+            Console.WriteLine(@"                                                                                
+                                ..MMMMMMMMMMM. ..                               
+                              .$MMMMMMMMMMMMMMMMM..                             
+                            ..MMMMMMMMMMMMMMMMMMMM .                            
+                           .MMMMMMMMMMMMMMMMMMMMMMM .                           
+                          .MMMMMMMMMMMMMMMMMMMMMMMMM..                          
+                          MMMMMMMMMMMMMMMMMMMMMMMMMMM.                          
+                        .MMMMMMMMMMMMMMMMMMMMMMMMMMMM:                          
+                        OMMMMMMMMMMMMMMMMMMMMMMMMMMMMM               
+                        MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMI..            
+                        8MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM:          
+         $MMMMMMMMM$,.   MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.       
+      MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMD    
+    OMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM    
+    MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM   
+    MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM   
+    MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM 
+     MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM  
+     MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM..MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+      MMMMMMMMMMMMMMMMMMM    MMMMMM.  7MMMMMD       MMMMMMMMMMMMMMMMMMMMMMMMMM 
+      ?MMMMMMMMMMMMMMMMMO  MMMMMMMM      MMMMM8  .   MMMMMMMMMMMMMMMMMMMMMMMMM
+       NMMMMMMMMMMMMMMMMN  ....MMM .      ... ....    MMMMMMMMMMMMMMMMMMMMMMMM 
+        NMMMMMMMMMMMMMMMM.      M, .                  ,MMMMMMMMMMMMMMMMMMMMMM+ 
+         8MMMMMMMMMMMMMMM       M.                    .MMMMMMMMMMMMMMMMMMMMMM  
+           MMMMMMMMMMMMMM ..                     .    ZMMMMMMMMMMMMMMMMMMMMM    
+            MMMMMMMMMMMMM       ...    .          . ..MMMMMMMMMMMMMMMMMMMMM  
+              MMMMMMMMMMM       MMM~.MMM.          ..MMMMM MMMMMMMMMMMMMMM    
+               ~MMMMMMMMM        MMMM               MMM.O. MMMMMMMMMMMMMM   
+                  MMMMMMM    .MMMMMMMMMMMD          IM  .  MMMMMMMMMMMM     
+                     MMMM. .MMMMMMMMMMMMMMMM        IM.  .MMMMMMMMMMM     
+                        M .MMMMMMMMMMMMMMMMMM    ..DMM . OMMMMMMMMM         
+                        M.MMMN           8MMMM, ..~MMM. +MMMMMMMM              
+                        MMMM               ~MMM..IMMMM..MMMMMMMMMI              
+                        MMMMM    MMM        ZMMMMMMMMM8.MMMMMMMMMM            
+                        MMMMMMMMMMMMMMMMMMMMMMMMMMMM8 .8MMMMMMMM              
+                        7MMMMMMMMMMMMMMMMMMMMMMMMMMM . ,MMMMMMMMM               
+                         OMMMMMMMMMMMMMMMMMMMMMMMMM.    MMMMMMMMM              
+                          NMMMMMMMMMMMMMMMMMMMMMMZ      ? MMMMMMM              
+                           $MMMMMMMMMMMMMMMMMMMM,..     .MMMMMM8MM             
+                             MMMMMMMMMMMMMMMMM. .        ?MMMMM             
+                               MMMM=7MMMMMM, ...      ..MMMMMM            
+                                   .. . . . .         MMMMMMMMO                 
+                                                   .MMMMMMMMMMM                 
+                              M                 ..DMMMMMMMMMMMMM              
+                             MMM      .  .N    .~MMMMMMMMMMMMMMM               
+                           .MMMMM     .MM.    .MMMMMMMMMMMMMMMMMM             
+                          7MMMMMMN    ....   MMMMMMMMMMMMMMMMMMMM              
+                         NMMMMMMMM.        MMMMMMMMMMMMMMMMMMMMM               
+                        MMMMMMMMMMM      MMMMMMMMMMMMMMMMMMMMM          
+");
+        }
+
+        static void BirdEatsAlkaSeltzer()
+        {
+            Console.WriteLine(@"
+
+
+                                             _______
+                                         _.-'       ''...._
+                                       .'        .--.    '.`
+                                      : .--.    :    :     '-.
+                                     : :    :   :    :       :`
+                                     : :  @ :___:  @ : __     '`.
+                              _____..:---''''   `----''  `.   .''
+                      	   -''                      ___j  :   :
+                          /                   __..''      :    `.
+                         /---------_______--''        __..'   /``
+                         \ _______________________--''       /
+                                          --''               \
+                                          :                :`.:
+                                           :              /
+                                            \            /
+                                             \          .'
+                                              :         :
+                                               :        \
+                                               :         \
+
+");
+            Thread.Sleep(PauseDuration);
+            Console.Clear();
+
+            Console.WriteLine(@"
+
+
+                                             _______
+                                         _.-'       ''...._
+                                       .'        .--.    '.`
+                                      : .--.    :    :     '-.
+                                     : :    :   :    :       :`
+                                     : :  @ :___:  @ : __     '`.
+                              _____..:---''''   `----''  `.   .''
+                      	   -''                            :   :
+                          /                               :    `.
+                         /--------@@-------------\    __..'   /``
+                          ________@@_____________/--''       /
+                         \ _______________________:          \
+                                          :                :`.:
+                                           :              /
+                                            \            /
+                                             \          .'
+                                              :         :
+                                               :        \
+                                               :         \
+
+");
+            Thread.Sleep(PauseDuration / 2);
+            Console.Clear();
+
+            Console.WriteLine(@"
+
+
+                                             _______
+                                         _.-'       ''...._
+                                       .'        .--.    '.`
+                                      : .--.    :    :     '-.
+                                     : :    :   :    :       :`
+                                     : :  @ :___:  @ : __     '`.
+                              _____..:---''''   `----''  `.   .''
+                      	   -''                      ___j  :   :
+                          /                   __..''      :    `.
+                         /---------_______--''        __..'   /``
+                         \ _______________________--''       /
+                                          --''               \
+                                          :                :`.:
+                                           :              /
+                                            \            /
+                                             \          .'
+                                              :         :
+                                               :        \
+                                               :         \
+
+");
+            Thread.Sleep(PauseDuration / 2);
+            Console.Clear();
+
+            Console.WriteLine(@"
+
+
+                                             _______
+                                         _.-'    .----...._
+                                       .'----.  :      : '.`
+                                      ::      : :      :   '-.
+                                     : :   X  : :   X  :     :`
+                                     : :      :_:      :      '`.
+                              _____..:---''''   `----'        .''
+                      	   -''                            \   :
+                          /                               :    `.
+                         /-------\                    __..'   /``
+                         \ _______________________--''       /
+                                          --''               \
+                                          :                :`.:
+                                           :              /
+                                            \            /
+                                             \          .'
+                                              :         :
+                                               :        \
+                                               :         \
+
+");
+            Thread.Sleep(PauseDuration);
+            Console.Clear();
+
+            Console.WriteLine(@"
+
+
+
+
+
+
+                        ██████╗  ██████╗  ██████╗ ███╗   ███╗██╗██╗
+                        ██╔══██╗██╔═══██╗██╔═══██╗████╗ ████║██║██║
+                        ██████╔╝██║   ██║██║   ██║██╔████╔██║██║██║
+                        ██╔══██╗██║   ██║██║   ██║██║╚██╔╝██║╚═╝╚═╝
+                        ██████╔╝╚██████╔╝╚██████╔╝██║ ╚═╝ ██║██╗██╗
+                        ╚═════╝  ╚═════╝  ╚═════╝ ╚═╝     ╚═╝╚═╝╚═╝
+                                           
+
+");
+           
+
+
+        }
+
+        static void BirdAvoidsAlkaSeltzer()
+        {
+            Console.WriteLine(@"
+
+
+                                             _______
+                                         _.-'       ''...._
+                                       .'        .--.    '.`
+                                      : .--.    :    :     '-.
+                                     : :    :   :    :       :`
+                                     : :  @ :___:  @ : __     '`.
+                              _____..:---''''   `----''  `.   .''
+                      	   -''                      ___j  :   :
+                          /                   __..''      :    `.
+                         /---------_______--''        __..'   /``
+                         \ _______________________--''       /
+                                          --''               \
+                                          :                :`.:
+                                           :              /
+                                            \            /
+                                             \          .'
+                                              :         :
+                                               :        \
+                                               :         \
+
+");
+            Thread.Sleep(PauseDuration);
+            Console.Clear();
+            Console.WriteLine(@"
+
+
+                                             _______
+                                         _.-'       ''...._
+                                       .' \        /     '.`
+                                      : .--\      /--.     '-.
+                                     : :____\   /____:       :`
+                                     : :--@-:___:--@-:        '`.
+                              _____..:---''''   `----''__     .''
+                      	   -''                           \    :
+                          /        _________              :    `.
+                         /---------         -----___      :   /``
+                         \ ____------------_____    \     /  /
+                                            ''        ---    \
+                                            :              :`.:
+                                            :             /
+                                            \            /
+                                             \          .'
+                                              :         :
+                                               :        \
+                                               :         \
+
+");
+
+        }
+
+        static void KickSand()
+        {
+            Console.WriteLine(@"
+                                                                *   *
+                                                      *      *          *     *
+                                                      
+                       \|//                      *        *         *       *
+                     -/_ /            ,-.   *         *
+                       _\\_           |  \    *     *           *
+                       \_  \          x  |   *   *      *                 *
+                 ,///   >   )         \_  \     *     *             *
+                / + +\ /   /         _/ )_/         *           *               *
+                |     )  \/        _/ \/        *     *     * *
+                /\__D/    \      _/    )                  *
+                 /  _   o  \   _/,   _/        *    *           *   *
+                /   /       ,_/   __/            *      *
+               /   / \    o//    _/       * 
+              /__o/   \___|    _/               *
+              _//       \__ __/\            *               *
+              \  \>       \     \            
+              // |         \__   \            
+                            /    /
+                            \___(
+                            /_/
+                           / O \
+                           '-   \__
+                             \_____)  
+
+");
         }
 
         static void YouWon()
