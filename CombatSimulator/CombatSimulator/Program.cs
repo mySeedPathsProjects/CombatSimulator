@@ -135,13 +135,13 @@ namespace CombatSimulator
             Console.WriteLine();
             Console.WriteLine("       COMBAT CHOICES:");
             Thread.Sleep(PauseDuration);
-            OldTimeyTextPrinter("**Alka-Seltzer kills a bird and causes others to fly away...but only if eaten.", 10);
+            OldTimeyTextPrinter("**Alka-Seltzer kills a bird and causes others to fly away...IF the bird eats it.", 10);
             Console.WriteLine();
             Thread.Sleep(PauseDuration / 4);
-            OldTimeyTextPrinter("**Throwing sand always works, but only makes a few birds fly away at most.", 10);
+            OldTimeyTextPrinter("**Kicking sand always works, but only makes a few birds fly away at most.", 10);
             Console.WriteLine();
             Thread.Sleep(PauseDuration / 4);
-            OldTimeyTextPrinter("**Add more chips to the nachos if you almost run out (1-4).", 10);
+            OldTimeyTextPrinter("**Add more chips to the nachos if you almost run out (2-4).", 10);
             Console.WriteLine();
             Thread.Sleep(PauseDuration);
             Console.WriteLine();
@@ -364,7 +364,7 @@ namespace CombatSimulator
 
                 case 3:
                     //Your play
-                    int chipsAdded = rng.Next(1, 5);
+                    int chipsAdded = rng.Next(2, 5);
                     NachosRemaining += chipsAdded;
                     PlayerSuccess = "You added " + chipsAdded + " chips back to your nachos.";
                     //Seagull's play
